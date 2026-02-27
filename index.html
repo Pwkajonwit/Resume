@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POWERTEC — กรุณาเลือกสายงาน</title>
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-hover: #0369a1;
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Kanit", "Sarabun";
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), #38bdf8);
+            border-radius: 12px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: var(--shadow-sm);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        p.subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .menu-item:hover,
+        .menu-item:active {
+            background-color: #f8fafc;
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .menu-item .icon {
+            font-size: 20px;
+            margin-right: 15px;
+        }
+
+        .menu-item .content {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-item .arrow {
+            color: #cbd5e1;
+            font-weight: bold;
+        }
+
+        .menu-item:hover .arrow {
+            color: var(--primary);
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="logo">PWT</div>
+        <h1>สมัครงาน</h1>
+        <p class="subtitle">กรุณาเลือกสายงานที่คุณต้องการสมัคร</p>
+
+        <div class="menu-list">
+            <a href="./engineer/index.html" class="menu-item">
+                <div class="content">
+                    <span class="icon">👷</span>
+                    วิศวกรรม (Engineer)
+                </div>
+                <span class="arrow">→</span>
+            </a>
+
+            <a href="./management/index.html" class="menu-item">
+                <div class="content">
+                    <span class="icon">💼</span>
+                    บริหาร (Management)
+                </div>
+                <span class="arrow">→</span>
+            </a>
+
+            <a href="./administrative/index.html" class="menu-item">
+                <div class="content">
+                    <span class="icon">📝</span>
+                    ธุรการ (Administrative)
+                </div>
+                <span class="arrow">→</span>
+            </a>
+        </div>
+
+        <div class="footer-note">
+            © 2026 POWERTEC ENGINEERING
+        </div>
+    </div>
+
+</body>
+
+</html>
