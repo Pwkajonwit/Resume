@@ -187,61 +187,64 @@
                         <h2>ตำแหน่งที่สนใจ (เลือกได้มากกว่า 1)</h2>
                         <div class="pills">
                             <label class="pill">
-                                <input type="checkbox" name="positionSiteEngineer"> วิศวกรไซต์ (Site Engineer)
+                                <input type="checkbox" name="positionProjectManager"> ผู้จัดการโครงการ (Project Manager)
                             </label>
                             <label class="pill">
-                                <input type="checkbox" name="positionOfficeEngineer"> วิศวกรออฟฟิศ (Office Engineer)
+                                <input type="checkbox" name="positionConstructionManager"> ผู้จัดการฝ่ายก่อสร้าง
+                                (Construction Manager)
                             </label>
                             <label class="pill">
-                                <input type="checkbox" name="positionDraftsman"> ช่างเขียนแบบ (Engineering Draftsman)
+                                <input type="checkbox" name="positionSupervisor"> หัวหน้างาน (Supervisor)
                             </label>
                         </div>
                     </div>
 
-                    <!-- ทักษะหลัก -->
+
+                    <!-- ทักษะด้านการบริหารจัดการ -->
                     <div class="section">
-                        <h2>ทักษะหลัก (เลือกระดับ)</h2>
+                        <h2>ทักษะการบริหารจัดการ (เลือกระดับ)</h2>
                         <div class="grid">
                             <div class="field">
-                                <label>ออกแบบเขียนแบบ</label>
+                                <label>การบริหารโครงการ (Project Management)</label>
                                 <div class="segment-group">
-                                    <label class="segment-pill"><input type="radio" name="skillDrawing" value="พอใช้">
+                                    <label class="segment-pill"><input type="radio" name="ratePM" value="พอใช้">
                                         พอใช้</label>
-                                    <label class="segment-pill"><input type="radio" name="skillDrawing" value="ปานกลาง">
+                                    <label class="segment-pill"><input type="radio" name="ratePM" value="ปานกลาง">
                                         ปานกลาง</label>
-                                    <label class="segment-pill"><input type="radio" name="skillDrawing" value="ดี">
+                                    <label class="segment-pill"><input type="radio" name="ratePM" value="ดี"> ดี</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>การบริหารทีมงาน (Team Management)</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="rateTeam" value="พอใช้">
+                                        พอใช้</label>
+                                    <label class="segment-pill"><input type="radio" name="rateTeam" value="ปานกลาง">
+                                        ปานกลาง</label>
+                                    <label class="segment-pill"><input type="radio" name="rateTeam" value="ดี">
                                         ดี</label>
                                 </div>
                             </div>
                             <div class="field">
-                                <label>ถอดแบบประเมินราคา</label>
+                                <label>การเจรจาต่อรอง (Negotiation)</label>
                                 <div class="segment-group">
-                                    <label class="segment-pill"><input type="radio" name="skillBOQ" value="พอใช้">
-                                        พอใช้</label>
-                                    <label class="segment-pill"><input type="radio" name="skillBOQ" value="ปานกลาง">
-                                        ปานกลาง</label>
-                                    <label class="segment-pill"><input type="radio" name="skillBOQ" value="ดี">
+                                    <label class="segment-pill"><input type="radio" name="rateNegotiation"
+                                            value="พอใช้"> พอใช้</label>
+                                    <label class="segment-pill"><input type="radio" name="rateNegotiation"
+                                            value="ปานกลาง"> ปานกลาง</label>
+                                    <label class="segment-pill"><input type="radio" name="rateNegotiation" value="ดี">
                                         ดี</label>
                                 </div>
                             </div>
                             <div class="field">
-                                <label>รายการคำนวณต่างๆ</label>
+                                <label>การวางแผนกลยุทธ์ (Strategic Planning)</label>
                                 <div class="segment-group">
-                                    <label class="segment-pill"><input type="radio" name="skillCalc" value="พอใช้">
+                                    <label class="segment-pill"><input type="radio" name="rateStrategic" value="พอใช้">
                                         พอใช้</label>
-                                    <label class="segment-pill"><input type="radio" name="skillCalc" value="ปานกลาง">
-                                        ปานกลาง</label>
-                                    <label class="segment-pill"><input type="radio" name="skillCalc" value="ดี">
+                                    <label class="segment-pill"><input type="radio" name="rateStrategic"
+                                            value="ปานกลาง"> ปานกลาง</label>
+                                    <label class="segment-pill"><input type="radio" name="rateStrategic" value="ดี">
                                         ดี</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label>ใบ กว.</label>
-                                <div class="segment-group">
-                                    <label class="segment-pill"><input type="radio" name="hasKorbWor" value="มี">
-                                        มี</label>
-                                    <label class="segment-pill"><input type="radio" name="hasKorbWor" value="ไม่มี">
-                                        ไม่มี</label>
                                 </div>
                             </div>
                         </div>
@@ -250,54 +253,35 @@
                     <!-- เครื่องมือ / การพิมพ์ -->
                     <div class="section">
                         <h2>เครื่องมือ / การพิมพ์</h2>
-                        <div class="grid">
-                            <div class="field">
-                                <label>ใช้กล้องระดับ</label>
-                                <div class="segment-group">
-                                    <label class="segment-pill"><input type="radio" name="canLevelCam" value="ได้">
-                                        ได้</label>
-                                    <label class="segment-pill"><input type="radio" name="canLevelCam" value="ไม่ได้">
-                                        ไม่ได้</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label>ใช้กล้อง Total</label>
-                                <div class="segment-group">
-                                    <label class="segment-pill"><input type="radio" name="canTotalStation" value="ได้">
-                                        ได้</label>
-                                    <label class="segment-pill"><input type="radio" name="canTotalStation"
-                                            value="ไม่ได้"> ไม่ได้</label>
-                                </div>
-                            </div>
 
-                            <div class="field">
-                                <label>พิมพ์ภาษาไทย</label>
-                                <div class="segment-group" style="flex-wrap: wrap;">
-                                    <label class="segment-pill"><input type="radio" name="typingThai" value="พอใช้">
-                                        พอใช้</label>
-                                    <label class="segment-pill"><input type="radio" name="typingThai" value="ปานกลาง">
-                                        ปานกลาง</label>
-                                    <label class="segment-pill"><input type="radio" name="typingThai" value="ดี">
-                                        ดี</label>
-                                    <label class="segment-pill"><input type="radio" name="typingThai" value="ดีมาก">
-                                        ดีมาก</label>
-                                </div>
+                        <div class="field">
+                            <label>พิมพ์ภาษาไทย</label>
+                            <div class="segment-group" style="flex-wrap: wrap;">
+                                <label class="segment-pill"><input type="radio" name="typingThai" value="พอใช้">
+                                    พอใช้</label>
+                                <label class="segment-pill"><input type="radio" name="typingThai" value="ปานกลาง">
+                                    ปานกลาง</label>
+                                <label class="segment-pill"><input type="radio" name="typingThai" value="ดี">
+                                    ดี</label>
+                                <label class="segment-pill"><input type="radio" name="typingThai" value="ดีมาก">
+                                    ดีมาก</label>
                             </div>
-                            <div class="field">
-                                <label>พิมพ์ภาษาอังกฤษ</label>
-                                <div class="segment-group" style="flex-wrap: wrap;">
-                                    <label class="segment-pill"><input type="radio" name="typingEnglish" value="พอใช้">
-                                        พอใช้</label>
-                                    <label class="segment-pill"><input type="radio" name="typingEnglish"
-                                            value="ปานกลาง"> ปานกลาง</label>
-                                    <label class="segment-pill"><input type="radio" name="typingEnglish" value="ดี">
-                                        ดี</label>
-                                    <label class="segment-pill"><input type="radio" name="typingEnglish" value="ดีมาก">
-                                        ดีมาก</label>
-                                </div>
+                        </div>
+                        <div class="field">
+                            <label>พิมพ์ภาษาอังกฤษ</label>
+                            <div class="segment-group" style="flex-wrap: wrap;">
+                                <label class="segment-pill"><input type="radio" name="typingEnglish" value="พอใช้">
+                                    พอใช้</label>
+                                <label class="segment-pill"><input type="radio" name="typingEnglish" value="ปานกลาง">
+                                    ปานกลาง</label>
+                                <label class="segment-pill"><input type="radio" name="typingEnglish" value="ดี">
+                                    ดี</label>
+                                <label class="segment-pill"><input type="radio" name="typingEnglish" value="ดีมาก">
+                                    ดีมาก</label>
                             </div>
                         </div>
                     </div>
+
 
                     <!-- ความพร้อม -->
                     <div class="section">
@@ -317,7 +301,8 @@
                                     <label class="segment-pill"><input type="radio" name="hasDriverLicense" value="มี">
                                         มี</label>
                                     <label class="segment-pill"><input type="radio" name="hasDriverLicense"
-                                            value="ไม่มี"> ไม่มี</label>
+                                            value="ไม่มี">
+                                        ไม่มี</label>
                                 </div>
                             </div>
                             <div class="field">
@@ -326,7 +311,8 @@
                                     <label class="segment-pill"><input type="radio" name="canWorkUpcountry" value="ได้">
                                         ได้</label>
                                     <label class="segment-pill"><input type="radio" name="canWorkUpcountry"
-                                            value="ไม่ได้"> ไม่ได้</label>
+                                            value="ไม่ได้">
+                                        ไม่ได้</label>
                                 </div>
                             </div>
                         </div>
@@ -351,61 +337,7 @@
                                         5</label>
                                 </div>
                             </div>
-                            <div class="field">
-                                <label>AutoCAD</label>
-                                <div class="segment-group">
-                                    <label class="segment-pill"><input type="radio" name="rateAutoCAD" value="1">
-                                        1</label>
-                                    <label class="segment-pill"><input type="radio" name="rateAutoCAD" value="2">
-                                        2</label>
-                                    <label class="segment-pill"><input type="radio" name="rateAutoCAD" value="3">
-                                        3</label>
-                                    <label class="segment-pill"><input type="radio" name="rateAutoCAD" value="4">
-                                        4</label>
-                                    <label class="segment-pill"><input type="radio" name="rateAutoCAD" value="5">
-                                        5</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label>SketchUp Pro</label>
-                                <div class="segment-group">
-                                    <label class="segment-pill"><input type="radio" name="rateSketchUp" value="1">
-                                        1</label>
-                                    <label class="segment-pill"><input type="radio" name="rateSketchUp" value="2">
-                                        2</label>
-                                    <label class="segment-pill"><input type="radio" name="rateSketchUp" value="3">
-                                        3</label>
-                                    <label class="segment-pill"><input type="radio" name="rateSketchUp" value="4">
-                                        4</label>
-                                    <label class="segment-pill"><input type="radio" name="rateSketchUp" value="5">
-                                        5</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label>V-Ray</label>
-                                <div class="segment-group">
-                                    <label class="segment-pill"><input type="radio" name="rateVray" value="1"> 1</label>
-                                    <label class="segment-pill"><input type="radio" name="rateVray" value="2"> 2</label>
-                                    <label class="segment-pill"><input type="radio" name="rateVray" value="3"> 3</label>
-                                    <label class="segment-pill"><input type="radio" name="rateVray" value="4"> 4</label>
-                                    <label class="segment-pill"><input type="radio" name="rateVray" value="5"> 5</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label>Enscape</label>
-                                <div class="segment-group">
-                                    <label class="segment-pill"><input type="radio" name="rateEnscape" value="1">
-                                        1</label>
-                                    <label class="segment-pill"><input type="radio" name="rateEnscape" value="2">
-                                        2</label>
-                                    <label class="segment-pill"><input type="radio" name="rateEnscape" value="3">
-                                        3</label>
-                                    <label class="segment-pill"><input type="radio" name="rateEnscape" value="4">
-                                        4</label>
-                                    <label class="segment-pill"><input type="radio" name="rateEnscape" value="5">
-                                        5</label>
-                                </div>
-                            </div>
+
 
                             <div class="field">
                                 <label>โปรแกรมอื่นๆ (ชื่อ)</label>
@@ -427,29 +359,29 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- ความสามารถอื่นๆ -->
-                    <div class="section">
-                        <h2>ความสามารถอื่นๆ</h2>
-                        <div class="field">
-                            <label>โปรดระบุ (ถ้ามี)</label>
-                            <textarea name="otherSkillsText"
-                                placeholder="เช่น ถนัดงานคุมไซต์, อ่านแบบ, ประสานงาน ฯลฯ"></textarea>
+
+                        <!-- ความสามารถอื่นๆ -->
+                        <div class="section">
+                            <h2>ความสามารถอื่นๆ</h2>
+                            <div class="field">
+                                <label>โปรดระบุ (ถ้ามี)</label>
+                                <textarea name="otherSkillsText"
+                                    placeholder="เช่น ถนัดงานคุมไซต์, อ่านแบบ, ประสานงาน ฯลฯ"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- แนบไฟล์ -->
+                        <div class="section">
+                            <h2>เอกสารแนบ</h2>
+                            <div class="field">
+                                <label>อัปโหลดไฟล์ (ไม่บังคับ / เลือกได้หลายไฟล์)</label>
+                                <input type="file" id="uploadFiles" name="uploadFiles" multiple
+                                    accept=".pdf,.doc,.docx,.jpg,.png" />
+                                <div class="hint">อัปโหลด Resume, Portfolio, หรือเอกสารอื่นๆ (แนะนำเป็น PDF)</div>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- แนบไฟล์ -->
-                    <div class="section">
-                        <h2>เอกสารแนบ</h2>
-                        <div class="field">
-                            <label>อัปโหลดไฟล์ (ไม่บังคับ / เลือกได้หลายไฟล์)</label>
-                            <input type="file" id="uploadFiles" name="uploadFiles" multiple
-                                accept=".pdf,.doc,.docx,.jpg,.png" />
-                            <div class="hint">อัปโหลด Resume, Portfolio, หรือเอกสารอื่นๆ (แนะนำเป็น PDF)</div>
-                        </div>
-                    </div>
-
                     <!-- Actions -->
                     <div class="actions">
                         <button type="button" class="btn btn-ghost"
@@ -466,6 +398,7 @@
                 </form>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- ================= Modal : สวัสดิการ (ตามตารางที่ให้มา) ================= -->
@@ -632,9 +565,53 @@
     <script src="./js/api.js"></script>
     <script src="./js/liff-init.js"></script>
 
-    <script src="./js/liff-init.js"></script>
-
     <script>
+        // ===== โหมดผู้ใช้: LINE หรือ Guest =====
+        let USER = {
+            lineUserId: 'WEB_GUEST',
+            displayName: 'ผู้สมัครผ่านเว็บ'
+        };
+
+        function เปิดModalสวัสดิการ() {
+            document.getElementById('benefitModal').style.display = 'flex';
+        }
+        function ปิดModalสวัสดิการ() {
+            document.getElementById('benefitModal').style.display = 'none';
+        }
+
+        // --- เพิ่มฟังก์ชันจัดการ Success Modal และปิดแอป ---
+        function เปิดModalสำเร็จ() {
+            document.getElementById('successModal').style.display = 'flex';
+        }
+
+        function ปิดแอปLIFF() {
+            if (liff.isInClient()) {
+                liff.closeWindow();
+            } else {
+                document.getElementById('successModal').style.display = 'none';
+                // ถ้าเปิดในเบราว์เซอร์ปกติ ก็ให้พาไปหน้าแรก
+                window.location.href = "../index.html";
+            }
+        }
+
+        function เปิดModalยืนยัน() {
+            const isAccepted = document.getElementById('acceptedBenefits').value === 'true';
+            document.getElementById('confirmStateReady').style.display = isAccepted ? 'block' : 'none';
+            document.getElementById('confirmStateNotReady').style.display = isAccepted ? 'none' : 'block';
+            document.getElementById('confirmModal').style.display = 'flex';
+        }
+        function ปิดModalยืนยัน() {
+            if (document.getElementById('btnConfirmSubmit').disabled) return; // ห้ามปิดตอนกำลังส่งข้อมูล
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        function toast(el, msg, isErr = false) {
+            el.classList.toggle('err', !!isErr);
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 4500);
+        }
+
         // ฟังก์ชันสำหรับส่ง Flex Message เข้าห้องแชทตอนส่งใบสมัคร
         async function sendFlexMessage(data) {
             // ตรวจสอบว่าเปิดใน LINE LIFF และล็อกอินอยู่หรือไม่
@@ -729,56 +706,6 @@
             }
         }
 
-        // ===== โหมดผู้ใช้: LINE หรือ Guest =====
-        let USER = {
-            lineUserId: 'WEB_GUEST',
-            displayName: 'ผู้สมัครผ่านเว็บ'
-        };
-
-        function เปิดModalสวัสดิการ() {
-            document.getElementById('benefitModal').style.display = 'flex';
-        }
-        function ปิดModalสวัสดิการ() {
-            document.getElementById('benefitsModal').style.display = 'none';
-        }
-
-        // --- เพิ่มฟังก์ชันจัดการ Success Modal และปิดแอป ---
-        function เปิดModalสำเร็จ() {
-            document.getElementById('successModal').style.display = 'flex';
-        }
-
-        function ปิดแอปLIFF() {
-            if (liff.isInClient()) {
-                liff.closeWindow();
-            } else {
-                document.getElementById('successModal').style.display = 'none';
-                // ถ้าเปิดในเบราว์เซอร์ปกติ ก็ให้พาไปหน้าแรก
-                window.location.href = "../index.html";
-            }
-        }
-
-        function ยอมรับสวัสดิการ() {
-            document.getElementById('benefitModal').style.display = 'none';
-        }
-
-        function เปิดModalยืนยัน() {
-            const isAccepted = document.getElementById('acceptedBenefits').value === 'true';
-            document.getElementById('confirmStateReady').style.display = isAccepted ? 'block' : 'none';
-            document.getElementById('confirmStateNotReady').style.display = isAccepted ? 'none' : 'block';
-            document.getElementById('confirmModal').style.display = 'flex';
-        }
-        function ปิดModalยืนยัน() {
-            if (document.getElementById('btnConfirmSubmit').disabled) return; // ห้ามปิดตอนกำลังส่งข้อมูล
-            document.getElementById('confirmModal').style.display = 'none';
-        }
-
-        function toast(el, msg, isErr = false) {
-            el.classList.toggle('err', !!isErr);
-            el.textContent = msg;
-            el.style.display = 'block';
-            setTimeout(() => { el.style.display = 'none'; }, 4500);
-        }
-
         async function fileToBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -856,7 +783,7 @@
 
                 await เรียกAPI_POST('ส่งใบสมัคร', data);
 
-                // ส่งเรซูเม่ฉบับย่อให้ผู้ใช้ผ่าน LINE แชท
+                // ส่งข้อความให้ผู้ใช้แบบเงียบๆ
                 if (USER.lineUserId !== 'WEB_GUEST') {
                     await sendFlexMessage(data);
                 }

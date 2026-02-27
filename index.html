@@ -5,74 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POWERTEC — กรุณาเลือกสายงาน</title>
+    <link rel="stylesheet" href="./engineer/css/styles.css" />
     <style>
-        :root {
-            --primary: #0284c7;
-            --primary-hover: #0369a1;
-            --bg-body: #f1f5f9;
-            --bg-card: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Kanit", "Sarabun";
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            background-color: var(--bg-card);
-            border-radius: 20px;
-            box-shadow: var(--shadow-md);
-            padding: 40px 30px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), #38bdf8);
-            border-radius: 12px;
-            margin: 0 auto 20px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            box-shadow: var(--shadow-sm);
-        }
-
-        h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-main);
-        }
-
-        p.subtitle {
-            font-size: 15px;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-        }
-
         .menu-list {
             display: flex;
             flex-direction: column;
@@ -84,29 +18,42 @@
             align-items: center;
             justify-content: space-between;
             background-color: #fff;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--line);
             padding: 16px 20px;
             border-radius: 12px;
             text-decoration: none;
-            color: var(--text-main);
+            color: var(--text);
             font-size: 16px;
             font-weight: 600;
             transition: all 0.2s ease;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         .menu-item:hover,
         .menu-item:active {
             background-color: #f8fafc;
-            border-color: var(--primary);
-            color: var(--primary);
+            border-color: var(--brand);
+            color: var(--brand);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow);
         }
 
         .menu-item .icon {
-            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
             margin-right: 15px;
+            background: #e8f5e9;
+            color: var(--brand);
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .menu-item:hover .icon {
+            background: linear-gradient(180deg, var(--brand2), var(--brand));
+            color: #fff;
         }
 
         .menu-item .content {
@@ -117,51 +64,163 @@
         .menu-item .arrow {
             color: #cbd5e1;
             font-weight: bold;
+            transition: all 0.2s ease;
         }
 
         .menu-item:hover .arrow {
-            color: var(--primary);
+            color: var(--brand);
+            transform: translateX(4px);
         }
 
         .footer-note {
             margin-top: 30px;
             font-size: 13px;
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(2px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 10;
+            color: var(--brand);
+            font-weight: 500;
+        }
+
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #e0f2fe;
+            border-top-color: var(--brand);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
 
 <body>
-
-    <div class="container">
-        <div class="logo">PWT</div>
-        <h1>สมัครงาน</h1>
-        <p class="subtitle">กรุณาเลือกสายงานที่คุณต้องการสมัคร</p>
-
-        <div class="menu-list">
-            <a href="./engineer/index.html" class="menu-item">
-                <div class="content">
-                    <span class="icon">👷</span>
-                    วิศวกรรม (Engineer)
+    <div class="container" style="max-width: 500px; padding-top: 40px;">
+        <div class="topbar"
+            style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div class="brand">
+                <div>
+                    <div class="title">POWERTEC ENGINEERING</div>
+                    <div class="sub">ระบบรับสมัครงานออนไลน์</div>
                 </div>
-                <span class="arrow">→</span>
-            </a>
+            </div>
 
-            <a href="./management/index.html" class="menu-item">
-                <div class="content">
-                    <span class="icon">💼</span>
-                    บริหาร (Management)
-                </div>
-                <span class="arrow">→</span>
-            </a>
+            <!-- รูปโปรไฟล์ผู้ใช้ -->
+            <div id="userProfileBox" style="display: none;">
+                <img id="userProfileImg" src="" alt="Profile"
+                    style="width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            </div>
+        </div>
 
-            <a href="./administrative/index.html" class="menu-item">
-                <div class="content">
-                    <span class="icon">📝</span>
-                    ธุรการ (Administrative)
+        <div class="card">
+            <div class="card-h">
+                <h1>สายงานที่ต้องการสมัคร</h1>
+                <p>กรุณาเลือกสายงานที่คุณต้องการสมัคร เพื่อดำเนินการต่อ</p>
+            </div>
+            <div class="card-b" style="position: relative; min-height: 200px;">
+                <!-- Loading State -->
+                <div id="loadingOverlay" class="loading-overlay">
+                    <div class="spinner"></div>
+                    <div>กำลังเตรียมระบบ...</div>
                 </div>
-                <span class="arrow">→</span>
-            </a>
+
+                <div class="menu-list" id="menuListItems" style="pointer-events: none; opacity: 0.5;">
+                    <a href="./engineer/index.html" class="menu-item">
+                        <div class="content">
+                            <div class="icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                                </svg>
+                            </div>
+                            วิศวกรรม (Engineer)
+                        </div>
+                        <span class="arrow">→</span>
+                    </a>
+
+                    <a href="./management/index.html" class="menu-item">
+                        <div class="content">
+                            <div class="icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                                </svg>
+                            </div>
+                            บริหาร (Management)
+                        </div>
+                        <span class="arrow">→</span>
+                    </a>
+
+                    <a href="./administrative/index.html" class="menu-item">
+                        <div class="content">
+                            <div class="icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                    <line x1="16" y1="13" x2="8" y2="13" />
+                                    <line x1="16" y1="17" x2="8" y2="17" />
+                                    <line x1="10" y1="9" x2="8" y2="9" />
+                                </svg>
+                            </div>
+                            ธุรการ (Administrative)
+                        </div>
+                        <span class="arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-b" style="padding: 16px;">
+                <a href="https://pwkajonwit.github.io/Resume/download/New%20CompanyRV.pdf" target="_blank"
+                    class="menu-item external-link"
+                    style="border-color: #0ea5e9; background-color: #f0f9ff; margin-bottom: 0;">
+                    <div class="content">
+                        <div class="icon" style="background: #e0f2fe; color: #0284c7;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <div style="display: flex; flex-direction: column; line-height: 1.2;">
+                            <span style="color: #0369a1; font-weight: bold; font-size: 16px;">เอกสารโปรไฟล์บริษัท</span>
+                            <span
+                                style="font-size: 13px; color: #0284c7; margin-top: 4px; font-weight: normal;">ศึกษาข้อมูลเบื้องต้นเกี่ยวกับบริษัทเรา
+                                (PDF)</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
 
         <div class="footer-note">
@@ -169,6 +228,57 @@
         </div>
     </div>
 
+    <!-- Initialize LIFF on the main page to prevent redirect loops and send data via URL -->
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="./engineer/js/Config.js"></script>
+    <script>
+        async function initMainLiff() {
+            try {
+                // ใช้ LIFF ID จากคอนฟิก (ใช้ของ engineer เป็นตัวแทนเพราะเหมือนกัน)
+                await liff.init({ liffId: window.APP_CONFIG.LIFF.LIFF_ID });
+
+                if (!liff.isLoggedIn() && liff.isInClient()) {
+                    liff.login();
+                    return; // ให้เบราว์เซอร์ล้อกอินแล้วรีเฟรชกลับมาเอง
+                }
+
+                if (liff.isLoggedIn()) {
+                    const profile = await liff.getProfile();
+                    const userId = profile.userId;
+                    const displayName = encodeURIComponent(profile.displayName);
+
+                    // แสดงโปรไฟล์บนหน้าจอ
+                    document.getElementById('userProfileBox').style.display = 'flex';
+                    if (profile.pictureUrl) {
+                        document.getElementById('userProfileImg').src = profile.pictureUrl;
+                    } else {
+                        // ถ้าไม่มีรูป ใช้รูป Placeholder
+                        document.getElementById('userProfileImg').src = 'https://ui-avatars.com/api/?name=' + displayName + '&background=random';
+                    }
+
+                    // แนบ userId และ displayName ไปกับ URL ของทุกเมนู (ยกเว้นเมนูภายนอก)
+                    document.querySelectorAll('.menu-item:not(.external-link)').forEach(link => {
+                        const originalHref = link.getAttribute('href');
+                        link.setAttribute('href', `${originalHref}?userId=${userId}&displayName=${displayName}`);
+                    });
+                }
+
+                // เอา Loading Overlay ออกเมื่อโหลดเสร็จ
+                document.getElementById('loadingOverlay').style.display = 'none';
+                document.getElementById('menuListItems').style.pointerEvents = 'auto';
+                document.getElementById('menuListItems').style.opacity = '1';
+
+            } catch (err) {
+                console.error("LIFF Init Error in Main Page:", err);
+
+                // กรณีเกิด Error ก็เปิดให้กดยื่นแบบ Guest ได้อยู่ดี
+                document.getElementById('loadingOverlay').style.display = 'none';
+                document.getElementById('menuListItems').style.pointerEvents = 'auto';
+                document.getElementById('menuListItems').style.opacity = '1';
+            }
+        }
+        initMainLiff();
+    </script>
 </body>
 
 </html>

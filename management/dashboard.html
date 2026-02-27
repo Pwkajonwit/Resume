@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>POWERTEC — แดชบอร์ด</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="topbar">
+            <div class="brand">
+                <div class="logo"></div>
+                <div>
+                    <div class="title" id="brandName">POWERTEC ENGINEERING</div>
+                    <div class="sub">แดชบอร์ด • ผู้สมัคร</div>
+                </div>
+            </div>
+            <div class="small"><a href="./index.html">กลับหน้าฟอร์ม</a></div>
+        </div>
+
+        <div class="card">
+            <div class="card-h">
+                <h1>สรุปภาพรวม</h1>
+                <p>ดึงข้อมูลจาก Google Sheet ผ่าน GAS</p>
+            </div>
+            <div class="card-b">
+                <div class="grid">
+                    <div class="field"><label>ผู้สมัครทั้งหมด</label><input id="total" readonly></div>
+                    <div class="field"><label>อัปเดตล่าสุด</label><input id="last" readonly></div>
+                    <div class="field"><label>ผู้จัดการโครงการ</label><input id="pm" readonly></div>
+                    <div class="field"><label>ฝ่ายก่อสร้าง</label><input id="cm" readonly></div>
+                    <div class="field"><label>หัวหน้างาน</label><input id="sv" readonly></div>
+                    <div class="field">
+                        <label>จำนวนที่แสดง</label>
+                        <select id="limit">
+                            <option value="30">30</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-primary" id="reload">รีเฟรช</button>
+                </div>
+
+                <div class="section">
+                    <h2>รายการล่าสุด</h2>
+                    <div id="list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/Config.js"></script>
+    <script src="./js/api.js"></script>
+    <script>
+        const $ = (id) => document.getElementById(id);
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        function render(rows) {
+            const el = $('list');
+            if (!rows || !rows.length) {
+                el.innerHTML = '<div class="hint">ยังไม่มีข้อมูล</div>';
+                return;
+            }
+
+            el.innerHTML = rows.map(r => {
+                const name = escapeHtml(r['ชื่อ-นามสกุล'] || '');
+                const phone = escapeHtml(r['เบอร์โทร'] || '');
+                const time = escapeHtml(r['เวลา'] || '');
+                const who = escapeHtml(r['ชื่อในไลน์'] || '');
+
+                const rawPM = r['ตำแหน่ง: ผู้จัดการโครงการ'] || r['สมัครตำแหน่ง_ผู้จัดการโครงการ'];
+                const rawCM = r['ตำแหน่ง: ผู้จัดการฝ่ายก่อสร้าง'] || r['สมัครตำแหน่ง_ผู้จัดการฝ่ายก่อสร้าง'];
+                const rawSV = r['ตำแหน่ง: หัวหน้างาน'] || r['สมัครตำแหน่ง_หัวหน้างาน'];
+
+                const pos = [
+                    rawPM && (String(rawPM).includes('โครงการ') || rawPM === true) ? 'ผู้จัดการโครงการ' : null,
+                    rawCM && (String(rawCM).includes('ก่อสร้าง') || rawCM === true) ? 'ฝ่ายก่อสร้าง' : null,
+                    rawSV && (String(rawSV).includes('หัวหน้างาน') || rawSV === true) ? 'หัวหน้างาน' : null
+                ].filter(Boolean).join(', ');
+
+                return `
+          <div style="padding:12px 12px;border:1px solid #e5e7eb;border-radius:14px;margin-bottom:10px;background:#fff">
+            <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+              <div style="font-weight:900">${name}</div>
+              <div style="color:#6b7280;font-size:12px">${time}</div>
+            </div>
+            <div style="margin-top:6px;color:#111827;font-size:13px">
+              <b>ตำแหน่ง:</b> ${escapeHtml(pos || '-')} • <b>โทร:</b> ${phone || '-'}
+            </div>
+            <div style="margin-top:6px;color:#6b7280;font-size:12px">LINE: ${who}</div>
+          </div>
+        `;
+            }).join('');
+        }
+
+        async function load() {
+            const limit = parseInt($('limit').value, 10);
+            const data = await โหลดDashboard(limit);
+
+            $('total').value = data.stats['ผู้สมัครทั้งหมด'] ?? '';
+            $('last').value = data.stats['อัปเดตล่าสุด'] ?? '';
+            $('pm').value = data.stats['นับตำแหน่ง']?.['ผู้จัดการโครงการ'] ?? 0;
+            $('cm').value = data.stats['นับตำแหน่ง']?.['ผู้จัดการฝ่ายก่อสร้าง'] ?? 0;
+            $('sv').value = data.stats['นับตำแหน่ง']?.['หัวหน้างาน'] ?? 0;
+
+            render(data.latest || []);
+        }
+
+        function showErr(err) {
+            $('list').innerHTML = `<div class="toast err" style="display:block">โหลดไม่สำเร็จ: ${escapeHtml(err.message)}</div>`;
+        }
+
+        $('brandName').textContent = window.APP_CONFIG.แบรนด์.ชื่อ;
+        $('reload').addEventListener('click', () => load().catch(showErr));
+        $('limit').addEventListener('change', () => load().catch(showErr));
+
+        load().catch(showErr);
+    </script>
+</body>
+
+</html>
