@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>POWERTEC — สมัครงาน</title>
+
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+    <!-- ===== Modal CSS (เฉพาะหน้านี้) ===== -->
+    <style>
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 16px;
+        }
+
+        .modal {
+            background: #fff;
+            color: #111827;
+            width: 100%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow: auto;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .35);
+        }
+
+        .modal-h {
+            padding: 16px 18px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-h h2 {
+            margin: 0;
+            font-size: 18px
+        }
+
+        .modal-b {
+            padding: 18px
+        }
+
+        .modal-close {
+            border: none;
+            background: #fee2e2;
+            color: #991b1b;
+            border-radius: 10px;
+            padding: 6px 10px;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .modal-note {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: #f9fafb;
+            color: #374151;
+            font-size: 13px;
+        }
+
+        /* ตารางสวัสดิการ - ทำให้อ่านง่ายบนมือถือ */
+        .benefit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .benefit-table th,
+        .benefit-table td {
+            border: 1px solid #d1d5db;
+            padding: 8px;
+            vertical-align: top;
+        }
+
+        .benefit-table thead th {
+            background: #f3f4f6;
+            font-weight: 800;
+        }
+
+        .benefit-no {
+            width: 60px;
+            text-align: center
+        }
+
+        .benefit-right {
+            width: 160px
+        }
+
+        .benefit-money {
+            text-align: right;
+            white-space: nowrap
+        }
+
+        @media (max-width:560px) {
+            .benefit-right {
+                width: 120px
+            }
+
+            .benefit-table {
+                font-size: 13px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- ================= Topbar (2 แถว) ================= -->
+        <div class="topbar" style="flex-direction:column;align-items:stretch;gap:10px">
+            <!-- แถวบน -->
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+                <div class="brand">
+                    <div class="logo"></div>
+                    <div>
+                        <div class="title" id="brandName">POWERTEC ENGINEERING</div>
+                        <div class="sub">สมัครงานออนไลน์</div>
+                    </div>
+                </div>
+                <div class="small" id="whoami">โหมดผู้ใช้ทั่วไป</div>
+            </div>
+
+            <!-- แถวล่าง: ปุ่มสวัสดิการ -->
+            <div style="display:flex">
+                <button id="btnBenefit" class="btn btn-ghost" style="width:100%" type="button"
+                    onclick="เปิดModalสวัสดิการ()">
+                    สวัสดิการและค่าตอบแทน
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= ใบสมัคร ================= -->
+        <div class="card">
+            <div class="card-h">
+                <h1>ใบสมัคร / ความรู้ความสามารถและความถนัด</h1>
+                <p>สามารถกรอกและส่งข้อมูลได้ แม้ไม่ได้เข้าสู่ระบบ LINE</p>
+            </div>
+
+            <div class="card-b">
+                <form id="applicantForm">
+
+                    <!-- ข้อมูลส่วนตัว -->
+                    <div class="grid">
+                        <div class="field">
+                            <label>ชื่อ-นามสกุล</label>
+                            <input name="fullName" required placeholder="เช่น นายสมชาย ใจดี" />
+                        </div>
+                        <div class="field">
+                            <label>เบอร์โทรติดต่อ</label>
+                            <input name="phone" required placeholder="0xx-xxx-xxxx" />
+                        </div>
+
+                        <div class="field">
+                            <label>วุฒิการศึกษา</label>
+                            <input name="educationLevel" placeholder="เช่น ปวส. / ป.ตรี" />
+                        </div>
+                        <div class="field">
+                            <label>จบจากสถาบัน</label>
+                            <input name="graduatedFrom" placeholder="สถาบัน/มหาวิทยาลัย" />
+                        </div>
+
+                        <div class="field">
+                            <label>ภาควิชา</label>
+                            <input name="engineeringDept" placeholder="เช่น โยธา" />
+                        </div>
+                        <div class="field">
+                            <label>สาขา</label>
+                            <input name="engineeringMajor" placeholder="เช่น โครงสร้าง / ก่อสร้าง" />
+                        </div>
+                    </div>
+
+                    <!-- ตำแหน่ง -->
+                    <div class="section">
+                        <h2>ตำแหน่งที่สนใจ (เลือกได้มากกว่า 1)</h2>
+                        <div class="pills">
+                            <label class="pill">
+                                <input type="checkbox" name="positionSiteEngineer"> วิศวกรไซต์ (Site Engineer)
+                            </label>
+                            <label class="pill">
+                                <input type="checkbox" name="positionOfficeEngineer"> วิศวกรออฟฟิศ (Office Engineer)
+                            </label>
+                            <label class="pill">
+                                <input type="checkbox" name="positionDraftsman"> ช่างเขียนแบบ (Engineering Draftsman)
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- ทักษะหลัก -->
+                    <div class="section">
+                        <h2>ทักษะหลัก (เลือกระดับ)</h2>
+                        <div class="grid">
+                            <div class="field">
+                                <label>ออกแบบเขียนแบบ</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="skillDrawing" value="พอใช้">
+                                        พอใช้</label>
+                                    <label class="segment-pill"><input type="radio" name="skillDrawing" value="ปานกลาง">
+                                        ปานกลาง</label>
+                                    <label class="segment-pill"><input type="radio" name="skillDrawing" value="ดี">
+                                        ดี</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>ถอดแบบประเมินราคา</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="skillBOQ" value="พอใช้">
+                                        พอใช้</label>
+                                    <label class="segment-pill"><input type="radio" name="skillBOQ" value="ปานกลาง">
+                                        ปานกลาง</label>
+                                    <label class="segment-pill"><input type="radio" name="skillBOQ" value="ดี">
+                                        ดี</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>รายการคำนวณต่างๆ</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="skillCalc" value="พอใช้">
+                                        พอใช้</label>
+                                    <label class="segment-pill"><input type="radio" name="skillCalc" value="ปานกลาง">
+                                        ปานกลาง</label>
+                                    <label class="segment-pill"><input type="radio" name="skillCalc" value="ดี">
+                                        ดี</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>ใบ กว.</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="hasKorbWor" value="มี">
+                                        มี</label>
+                                    <label class="segment-pill"><input type="radio" name="hasKorbWor" value="ไม่มี">
+                                        ไม่มี</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- เครื่องมือ / การพิมพ์ -->
+                    <div class="section">
+                        <h2>เครื่องมือ / การพิมพ์</h2>
+                        <div class="grid">
+                            <div class="field">
+                                <label>ใช้กล้องระดับ</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="canLevelCam" value="ได้">
+                                        ได้</label>
+                                    <label class="segment-pill"><input type="radio" name="canLevelCam" value="ไม่ได้">
+                                        ไม่ได้</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>ใช้กล้อง Total</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="canTotalStation" value="ได้">
+                                        ได้</label>
+                                    <label class="segment-pill"><input type="radio" name="canTotalStation"
+                                            value="ไม่ได้"> ไม่ได้</label>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label>พิมพ์ภาษาไทย</label>
+                                <div class="segment-group" style="flex-wrap: wrap;">
+                                    <label class="segment-pill"><input type="radio" name="typingThai" value="พอใช้">
+                                        พอใช้</label>
+                                    <label class="segment-pill"><input type="radio" name="typingThai" value="ปานกลาง">
+                                        ปานกลาง</label>
+                                    <label class="segment-pill"><input type="radio" name="typingThai" value="ดี">
+                                        ดี</label>
+                                    <label class="segment-pill"><input type="radio" name="typingThai" value="ดีมาก">
+                                        ดีมาก</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>พิมพ์ภาษาอังกฤษ</label>
+                                <div class="segment-group" style="flex-wrap: wrap;">
+                                    <label class="segment-pill"><input type="radio" name="typingEnglish" value="พอใช้">
+                                        พอใช้</label>
+                                    <label class="segment-pill"><input type="radio" name="typingEnglish"
+                                            value="ปานกลาง"> ปานกลาง</label>
+                                    <label class="segment-pill"><input type="radio" name="typingEnglish" value="ดี">
+                                        ดี</label>
+                                    <label class="segment-pill"><input type="radio" name="typingEnglish" value="ดีมาก">
+                                        ดีมาก</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ความพร้อม -->
+                    <div class="section">
+                        <h2>ความพร้อม</h2>
+                        <div class="grid">
+                            <div class="field">
+                                <label>มีรถส่วนตัว</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="hasCar" value="มี"> มี</label>
+                                    <label class="segment-pill"><input type="radio" name="hasCar" value="ไม่มี">
+                                        ไม่มี</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>มีใบอนุญาตขับขี่รถยนต์</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="hasDriverLicense" value="มี">
+                                        มี</label>
+                                    <label class="segment-pill"><input type="radio" name="hasDriverLicense"
+                                            value="ไม่มี"> ไม่มี</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>ทำงานต่างจังหวัด</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="canWorkUpcountry" value="ได้">
+                                        ได้</label>
+                                    <label class="segment-pill"><input type="radio" name="canWorkUpcountry"
+                                            value="ไม่ได้"> ไม่ได้</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ระดับความสามารถ -->
+                    <div class="section">
+                        <h2>ระดับความสามารถ (1-5)</h2>
+                        <div class="grid">
+                            <div class="field">
+                                <label>Microsoft Word/Excel/PowerPoint</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="rateWordExcelPPT" value="1">
+                                        1</label>
+                                    <label class="segment-pill"><input type="radio" name="rateWordExcelPPT" value="2">
+                                        2</label>
+                                    <label class="segment-pill"><input type="radio" name="rateWordExcelPPT" value="3">
+                                        3</label>
+                                    <label class="segment-pill"><input type="radio" name="rateWordExcelPPT" value="4">
+                                        4</label>
+                                    <label class="segment-pill"><input type="radio" name="rateWordExcelPPT" value="5">
+                                        5</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>AutoCAD</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="rateAutoCAD" value="1">
+                                        1</label>
+                                    <label class="segment-pill"><input type="radio" name="rateAutoCAD" value="2">
+                                        2</label>
+                                    <label class="segment-pill"><input type="radio" name="rateAutoCAD" value="3">
+                                        3</label>
+                                    <label class="segment-pill"><input type="radio" name="rateAutoCAD" value="4">
+                                        4</label>
+                                    <label class="segment-pill"><input type="radio" name="rateAutoCAD" value="5">
+                                        5</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>SketchUp Pro</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="rateSketchUp" value="1">
+                                        1</label>
+                                    <label class="segment-pill"><input type="radio" name="rateSketchUp" value="2">
+                                        2</label>
+                                    <label class="segment-pill"><input type="radio" name="rateSketchUp" value="3">
+                                        3</label>
+                                    <label class="segment-pill"><input type="radio" name="rateSketchUp" value="4">
+                                        4</label>
+                                    <label class="segment-pill"><input type="radio" name="rateSketchUp" value="5">
+                                        5</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>V-Ray</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="rateVray" value="1"> 1</label>
+                                    <label class="segment-pill"><input type="radio" name="rateVray" value="2"> 2</label>
+                                    <label class="segment-pill"><input type="radio" name="rateVray" value="3"> 3</label>
+                                    <label class="segment-pill"><input type="radio" name="rateVray" value="4"> 4</label>
+                                    <label class="segment-pill"><input type="radio" name="rateVray" value="5"> 5</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Enscape</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="rateEnscape" value="1">
+                                        1</label>
+                                    <label class="segment-pill"><input type="radio" name="rateEnscape" value="2">
+                                        2</label>
+                                    <label class="segment-pill"><input type="radio" name="rateEnscape" value="3">
+                                        3</label>
+                                    <label class="segment-pill"><input type="radio" name="rateEnscape" value="4">
+                                        4</label>
+                                    <label class="segment-pill"><input type="radio" name="rateEnscape" value="5">
+                                        5</label>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label>โปรแกรมอื่นๆ (ชื่อ)</label>
+                                <input name="rateOthersLabel" placeholder="เช่น Revit" />
+                            </div>
+                            <div class="field">
+                                <label>โปรแกรมอื่นๆ (คะแนน 1-5)</label>
+                                <div class="segment-group">
+                                    <label class="segment-pill"><input type="radio" name="rateOthersValue" value="1">
+                                        1</label>
+                                    <label class="segment-pill"><input type="radio" name="rateOthersValue" value="2">
+                                        2</label>
+                                    <label class="segment-pill"><input type="radio" name="rateOthersValue" value="3">
+                                        3</label>
+                                    <label class="segment-pill"><input type="radio" name="rateOthersValue" value="4">
+                                        4</label>
+                                    <label class="segment-pill"><input type="radio" name="rateOthersValue" value="5">
+                                        5</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ความสามารถอื่นๆ -->
+                    <div class="section">
+                        <h2>ความสามารถอื่นๆ</h2>
+                        <div class="field">
+                            <label>โปรดระบุ (ถ้ามี)</label>
+                            <textarea name="otherSkillsText"
+                                placeholder="เช่น ถนัดงานคุมไซต์, อ่านแบบ, ประสานงาน ฯลฯ"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="actions">
+                        <button type="button" class="btn btn-ghost"
+                            onclick="document.getElementById('applicantForm').reset(); document.getElementById('acceptedBenefits').value='false'; document.getElementById('btnBenefit').innerText='สวัสดิการและค่าตอบแทน';">
+                            ล้างฟอร์ม
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            ส่งใบสมัคร
+                        </button>
+                    </div>
+
+                    <div id="toast1" class="toast"></div>
+                    <input type="hidden" id="acceptedBenefits" name="acceptedBenefits" value="false">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Modal : สวัสดิการ (ตามตารางที่ให้มา) ================= -->
+    <div class="modal-backdrop" id="benefitModal">
+        <div class="modal">
+            <div class="modal-h">
+                <h2>สวัสดิการและค่าตอบแทน</h2>
+                <button class="modal-close" type="button" onclick="ปิดModalสวัสดิการ()">ปิด</button>
+            </div>
+
+            <div class="modal-b">
+
+                <table class="benefit-table">
+                    <thead>
+                        <tr>
+                            <th class="benefit-no">ลำดับ</th>
+                            <th>สวัสดิการและค่าตอบแทน</th>
+                            <th class="benefit-right">สิทธิที่ได้รับ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="benefit-no">1</td>
+                            <td>เงินเดือน</td>
+                            <td class="benefit-money">25,000</td>
+                        </tr>
+                        <tr>
+                            <td class="benefit-no">2</td>
+                            <td>ค่าโทรศัพท์/เดือน</td>
+                            <td class="benefit-money">500</td>
+                        </tr>
+                        <tr>
+                            <td class="benefit-no">3</td>
+                            <td>ทดลองงาน 90 วัน</td>
+                            <td>ตามนโยบายของบริษัท</td>
+                        </tr>
+                        <tr>
+                            <td class="benefit-no">4</td>
+                            <td>การปรับขึ้นเงินเดือนขึ้นอยู่กับผู้ปฏิบัติงาน, อายุงาน หรือตามนายจ้างเห็นสมควร</td>
+                            <td>ตามนโยบายของบริษัท</td>
+                        </tr>
+                        <tr>
+                            <td class="benefit-no">5</td>
+                            <td>ค่าที่พัก (ค่าน้ำ, ค่าไฟ) <strong>ที่พักของบริษัท</strong></td>
+                            <td>ฟรี</td>
+                        </tr>
+                        <tr>
+                            <td class="benefit-no">6</td>
+                            <td>
+                                ค่าเดินทาง (น้ำมัน)
+                                <div style="margin-top:6px;font-size:13px;line-height:1.45">
+                                    6.1 ใช้รถของบริษัท<br>
+                                    6.2 ใช้รถส่วนตัววิ่งงานให้กับบริษัท <strong>ออกค่าใช้จ่ายให้บางส่วน</strong>
+                                </div>
+                            </td>
+                            <td>เบิกตามระยะทางจริง</td>
+                        </tr>
+                        <tr>
+                            <td class="benefit-no">7</td>
+                            <td>ค่าอาหาร (OT) หลัง 18.00 น.</td>
+                            <td>ฟรี</td>
+                        </tr>
+                        <tr>
+                            <td class="benefit-no">8</td>
+                            <td>ประกันสังคม, ค่ารักษาพยาบาล และเงินทดแทนต่างๆ</td>
+                            <td>ตามสิทธิประกันตน</td>
+                        </tr>
+                        <tr>
+                            <td class="benefit-no">9</td>
+                            <td>
+                                วันหยุด
+                                <ul style="margin:6px 0 0 16px;padding:0">
+                                    <li>วันหยุด 1 วัน/สัปดาห์ หรือรวม 4 วัน/เดือน</li>
+                                    <li>วันหยุดตามประเพณี ไม่น้อยกว่า 13 วัน</li>
+                                    <li>ลาป่วย (จ่ายค่าจ้างไม่เกิน 30 วันทำงาน/ปี)</li>
+                                    <li>ลากิจ (ลาได้ไม่เกิน 3 วันทำงาน/ปี ลาเพื่อธุระจำเป็น)</li>
+                                    <li>ลาพักร้อน (ทำงานครบ 1 ปี ลาได้ไม่เกิน 6 วันทำงาน/ปี)</li>
+                                </ul>
+                            </td>
+                            <td>ตามกฎหมายคุ้มครองแรงงานกำหนด</td>
+                        </tr>
+                        <tr>
+                            <td class="benefit-no">10</td>
+                            <td>งานเลี้ยงสังสรรค์ (งานบานหรือโปรเจคสิ้นปี)</td>
+                            <td>ตามบริษัทเห็นสมควร</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="modal-note">
+                    หมายเหตุ: สวัสดิการและค่าตอบแทนอาจเปลี่ยนแปลงได้ตามนโยบายของบริษัท
+                    หรือ ตามนายจ้างเห็นสมควร
+                </div>
+
+                <div class="actions" style="margin-top:14px">
+                    <button class="btn btn-primary" type="button" onclick="รับทราบสวัสดิการ()">
+                        รับทราบสวัสดิการและค่าตอบแทน
+                    </button>
+                </div>
+
+                <div id="toastBenefits" class="toast"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Modal : ยืนยันการส่งใบสมัคร ================= -->
+    <div class="modal-backdrop" id="confirmModal">
+        <div class="modal" style="max-width: 400px;">
+            <div class="modal-h">
+                <h2>ยืนยันการส่งใบสมัคร</h2>
+                <button class="modal-close" type="button" onclick="ปิดModalยืนยัน()">ปิด</button>
+            </div>
+            <div class="modal-b">
+                <!-- กรณีพร้อมส่ง -->
+                <div id="confirmStateReady" style="display: none;">
+                    <p style="margin-bottom: 20px;">คุณตรวจสอบข้อมูลครบถ้วน และต้องการส่งใบสมัครใช่หรือไม่?</p>
+                    <div class="actions">
+                        <button class="btn btn-ghost" type="button" onclick="ปิดModalยืนยัน()">
+                            ยกเลิก
+                        </button>
+                        <button id="btnConfirmSubmit" class="btn btn-primary" type="button"
+                            onclick="ยืนยันส่งใบสมัคร()">
+                            ยืนยันและส่งใบสมัคร
+                        </button>
+                    </div>
+                </div>
+
+                <!-- กรณียังไม่ได้อ่านสวัสดิการ -->
+                <div id="confirmStateNotReady" style="display: none; text-align: center;">
+                    <div style="font-size: 40px; margin-bottom: 10px;">⚠️</div>
+                    <p style="margin-bottom: 20px; font-weight: 500; color: #b91c1c;">คุณยังไม่ได้กดยอมรับ
+                        "สวัสดิการและค่าตอบแทน" กรุณาเปิดอ่านและกดยอมรับก่อนส่งใบสมัครครับ</p>
+                    <div class="actions" style="justify-content: center;">
+                        <button class="btn btn-primary" type="button" onclick="ปิดModalยืนยัน(); เปิดModalสวัสดิการ();">
+                            เปิดอ่านสวัสดิการ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Scripts ================= -->
+    <script src="./js/Config.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/liff-init.js"></script>
+
+    <script src="./js/liff-init.js"></script>
+
+    <script>
+        // ฟังก์ชันสำหรับส่ง Flex Message เข้าห้องแชท
+        async function sendFlexMessage(data) {
+            // ตรวจสอบว่าเปิดใน LINE LIFF และล็อกอินอยู่หรือไม่
+            if (!liff.isInClient() || !liff.isLoggedIn()) return;
+
+            // ดึงชื่อตำแหน่งที่เลือก
+            const positions = [];
+            if (data.positionSiteEngineer) positions.push('วิศวกรไซต์');
+            if (data.positionOfficeEngineer) positions.push('วิศวกรออฟฟิศ');
+            if (data.positionDraftsman) positions.push('ช่างเขียนแบบ');
+            const posText = positions.length > 0 ? positions.join(', ') : 'ไม่ได้ระบุตำแหน่ง';
+
+            try {
+                await liff.sendMessages([
+                    {
+                        "type": "flex",
+                        "altText": "ส่งใบสมัครงานเรียบร้อยแล้ว",
+                        "contents": {
+                            "type": "bubble",
+                            "size": "giga",
+                            "header": {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "contents": [
+                                            {
+                                                "type": "text",
+                                                "text": "POWERTEC ENGINEERING",
+                                                "color": "#ffffff",
+                                                "size": "md",
+                                                "flex": 4,
+                                                "weight": "bold"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "ส่งใบสมัครเรียบร้อยแล้ว",
+                                        "color": "#ffffff",
+                                        "margin": "sm",
+                                        "size": "xs"
+                                    }
+                                ],
+                                "paddingAll": "20px",
+                                "backgroundColor": "#0369a1",
+                                "spacing": "md",
+                                "height": "90px"
+                            },
+                            "body": {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "contents": [
+                                            {
+                                                "type": "text",
+                                                "text": "ข้อมูลผู้สมัคร",
+                                                "size": "sm",
+                                                "color": "#64748b",
+                                                "weight": "bold",
+                                                "margin": "md"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "text": data.fullName || "-",
+                                                "size": "lg",
+                                                "weight": "bold",
+                                                "color": "#0f172a",
+                                                "wrap": true,
+                                                "margin": "sm"
+                                            }
+                                        ],
+                                        "margin": "none"
+                                    },
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "contents": [
+                                            {
+                                                "type": "box",
+                                                "layout": "horizontal",
+                                                "contents": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": "เบอร์โทรศัพท์",
+                                                        "size": "sm",
+                                                        "color": "#64748b",
+                                                        "flex": 1
+                                                    },
+                                                    {
+                                                        "type": "text",
+                                                        "text": data.phone || "-",
+                                                        "size": "sm",
+                                                        "color": "#0f172a",
+                                                        "flex": 2,
+                                                        "wrap": true,
+                                                        "weight": "bold"
+                                                    }
+                                                ],
+                                                "spacing": "sm",
+                                                "margin": "lg"
+                                            },
+                                            {
+                                                "type": "box",
+                                                "layout": "horizontal",
+                                                "contents": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": "ตำแหน่งที่สมัคร",
+                                                        "size": "sm",
+                                                        "color": "#64748b",
+                                                        "flex": 1
+                                                    },
+                                                    {
+                                                        "type": "text",
+                                                        "text": posText,
+                                                        "size": "sm",
+                                                        "color": "#0f172a",
+                                                        "flex": 2,
+                                                        "wrap": true,
+                                                        "weight": "bold"
+                                                    }
+                                                ],
+                                                "spacing": "sm",
+                                                "margin": "md"
+                                            },
+                                            {
+                                                "type": "box",
+                                                "layout": "horizontal",
+                                                "contents": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": "วุฒิการศึกษา",
+                                                        "size": "sm",
+                                                        "color": "#64748b",
+                                                        "flex": 1
+                                                    },
+                                                    {
+                                                        "type": "text",
+                                                        "text": (data.educationLevel || "-") + " " + (data.engineeringMajor ? `(${data.engineeringMajor})` : ""),
+                                                        "size": "sm",
+                                                        "color": "#0f172a",
+                                                        "flex": 2,
+                                                        "wrap": true,
+                                                        "weight": "bold"
+                                                    }
+                                                ],
+                                                "spacing": "sm",
+                                                "margin": "md"
+                                            }
+                                        ],
+                                        "margin": "xl",
+                                        "paddingTop": "15px",
+                                        "borderWidth": "1px",
+                                        "borderColor": "#f1f5f9",
+                                        "borderStyle": "solid",
+                                        "paddingBottom": "0px",
+                                        "paddingStart": "0px",
+                                        "paddingEnd": "0px"
+                                    }
+                                ],
+                                "paddingAll": "24px"
+                            },
+                            "footer": {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "text": "ทางบริษัทจะพิจารณาคุณสมบัติและติดต่อกลับเพื่อนัดสัมภาษณ์ในลำดับถัดไป",
+                                        "wrap": true,
+                                        "size": "xs",
+                                        "color": "#94a3b8",
+                                        "align": "center"
+                                    }
+                                ],
+                                "paddingAll": "16px",
+                                "backgroundColor": "#f8fafc"
+                            }
+                        }
+                    }
+                ]);
+            } catch (err) {
+                console.error("ส่ง Flex Message ไม่สำเร็จ:", err);
+            }
+        }
+
+        // ===== โหมดผู้ใช้: LINE หรือ Guest =====
+        let USER = {
+            lineUserId: 'WEB_GUEST',
+            displayName: 'ผู้สมัครผ่านเว็บ'
+        };
+
+        function เปิดModalสวัสดิการ() {
+            document.getElementById('benefitModal').style.display = 'flex';
+        }
+        function ปิดModalสวัสดิการ() {
+            document.getElementById('benefitModal').style.display = 'none';
+        }
+
+        function เปิดModalยืนยัน() {
+            const isAccepted = document.getElementById('acceptedBenefits').value === 'true';
+            document.getElementById('confirmStateReady').style.display = isAccepted ? 'block' : 'none';
+            document.getElementById('confirmStateNotReady').style.display = isAccepted ? 'none' : 'block';
+            document.getElementById('confirmModal').style.display = 'flex';
+        }
+        function ปิดModalยืนยัน() {
+            if (document.getElementById('btnConfirmSubmit').disabled) return; // ห้ามปิดตอนกำลังส่งข้อมูล
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        function toast(el, msg, isErr = false) {
+            el.classList.toggle('err', !!isErr);
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 4500);
+        }
+
+        function formToObj(form) {
+            const fd = new FormData(form);
+            const o = {};
+            for (const [k, v] of fd.entries()) o[k] = v;
+
+            // checkboxes (สำหรับตำแหน่ง)
+            form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                o[cb.name] = cb.checked;
+            });
+
+            // radio buttons (สำหรับ segment pills)
+            // Note: FormData handles checked radio buttons automatically, 
+            // but we want to ensure we don't send purely empty strings if they aren't fully checked, though the default is "".
+            return o;
+        }
+
+        async function รับทราบสวัสดิการ() {
+            const t = document.getElementById('toastBenefits');
+
+            // Mark as accepted instead of sending an API request
+            document.getElementById('acceptedBenefits').value = 'true';
+            document.getElementById('btnBenefit').innerText = 'รับทราบสวัสดิการเรียบร้อย ✅';
+            document.getElementById('btnBenefit').style.background = '#ecfdf5';
+            document.getElementById('btnBenefit').style.color = '#065f46';
+            document.getElementById('btnBenefit').style.border = '1px solid #a7f3d0';
+
+            toast(t, 'รับทราบสวัสดิการเรียบร้อย ✅ จะถูกบันทึกพร้อมใบสมัคร');
+            setTimeout(() => ปิดModalสวัสดิการ(), 1200);
+        }
+
+        async function ยืนยันส่งใบสมัคร() {
+            const form = document.getElementById('applicantForm');
+            const t = document.getElementById('toast1');
+            const btn = document.getElementById('btnConfirmSubmit');
+            const originalBtnText = btn.innerText;
+
+            try {
+                // เปลี่ยนสถานะปุ่ม
+                btn.innerText = 'กำลังส่งข้อมูล...';
+                btn.disabled = true;
+
+                const data = formToObj(form);
+                // Include the hidden input value
+                data.acceptedBenefits = document.getElementById('acceptedBenefits').value === 'true';
+                data.lineUserId = USER.lineUserId;
+                data.displayName = USER.displayName;
+
+                await เรียกAPI_POST('ส่งใบสมัคร', data);
+
+                // ส่งเรซูเม่ฉบับย่อให้ผู้ใช้ผ่าน LINE แชท
+                if (USER.lineUserId !== 'WEB_GUEST') {
+                    await sendFlexMessage(data);
+                }
+
+                toast(t, 'ส่งใบสมัครสำเร็จ ✅');
+                form.reset();
+                // Reset benefits acceptance
+                document.getElementById('acceptedBenefits').value = 'false';
+                document.getElementById('btnBenefit').innerText = 'สวัสดิการและค่าตอบแทน';
+                document.getElementById('btnBenefit').style = '';
+
+            } catch (err) {
+                toast(t, 'ส่งไม่สำเร็จ: ' + err.message, true);
+            } finally {
+                // คืนค่าสถานะปุ่ม และปิด modal
+                btn.innerText = originalBtnText;
+                btn.disabled = false;
+                ปิดModalยืนยัน();
+            }
+        }
+
+        (async () => {
+            document.getElementById('brandName').textContent = window.APP_CONFIG.แบรนด์.ชื่อ;
+
+            // พยายามเริ่ม LIFF แต่ "ไม่บังคับ"
+            try {
+                await เริ่มLIFF();
+                if (window.__LIFF_PROFILE__) {
+                    USER = window.__LIFF_PROFILE__;
+                    document.getElementById('whoami').textContent = 'LINE: ' + USER.displayName;
+                } else {
+                    document.getElementById('whoami').textContent = 'โหมดผู้ใช้ทั่วไป';
+                }
+            } catch (_) {
+                document.getElementById('whoami').textContent = 'โหมดผู้ใช้ทั่วไป';
+            }
+
+            document.getElementById('applicantForm').addEventListener('submit', async (ev) => {
+                ev.preventDefault();
+                // ตรวจสอบ HTML5 Form Validation เพื่อให้แน่ใจว่ากรอกข้อมูลครบก่อนเปิด Modal
+                if (!ev.target.checkValidity()) {
+                    ev.target.reportValidity();
+                    return;
+                }
+                เปิดModalยืนยัน();
+            });
+        })();
+    </script>
+</body>
+
+</html>
