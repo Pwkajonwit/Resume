@@ -237,31 +237,31 @@
                 // ใช้ LIFF ID จากคอนฟิก (ใช้ของ engineer เป็นตัวแทนเพราะเหมือนกัน)
                 await liff.init({ liffId: window.APP_CONFIG.LIFF.LIFF_ID });
 
-                if (!liff.isLoggedIn() && liff.isInClient()) {
+                // บังคับล็อกอิน LINE ทุกครั้ง — ไม่อนุญาต WEB_GUEST
+                if (!liff.isLoggedIn()) {
                     liff.login();
-                    return; // ให้เบราว์เซอร์ล้อกอินแล้วรีเฟรชกลับมาเอง
+                    return; // redirect ไปหน้า LINE Login แล้วกลับมาใหม่
                 }
 
-                if (liff.isLoggedIn()) {
-                    const profile = await liff.getProfile();
-                    const userId = profile.userId;
-                    const displayName = encodeURIComponent(profile.displayName);
+                // ผู้ใช้ล็อกอินแล้ว — ดึงโปรไฟล์
+                const profile = await liff.getProfile();
+                const userId = profile.userId;
+                const displayName = encodeURIComponent(profile.displayName);
 
-                    // แสดงโปรไฟล์บนหน้าจอ
-                    document.getElementById('userProfileBox').style.display = 'flex';
-                    if (profile.pictureUrl) {
-                        document.getElementById('userProfileImg').src = profile.pictureUrl;
-                    } else {
-                        // ถ้าไม่มีรูป ใช้รูป Placeholder
-                        document.getElementById('userProfileImg').src = 'https://ui-avatars.com/api/?name=' + displayName + '&background=random';
-                    }
-
-                    // แนบ userId และ displayName ไปกับ URL ของทุกเมนู (ยกเว้นเมนูภายนอก)
-                    document.querySelectorAll('.menu-item:not(.external-link)').forEach(link => {
-                        const originalHref = link.getAttribute('href');
-                        link.setAttribute('href', `${originalHref}?userId=${userId}&displayName=${displayName}`);
-                    });
+                // แสดงโปรไฟล์บนหน้าจอ
+                document.getElementById('userProfileBox').style.display = 'flex';
+                if (profile.pictureUrl) {
+                    document.getElementById('userProfileImg').src = profile.pictureUrl;
+                } else {
+                    // ถ้าไม่มีรูป ใช้รูป Placeholder
+                    document.getElementById('userProfileImg').src = 'https://ui-avatars.com/api/?name=' + displayName + '&background=random';
                 }
+
+                // แนบ userId และ displayName ไปกับ URL ของทุกเมนู (ยกเว้นเมนูภายนอก)
+                document.querySelectorAll('.menu-item:not(.external-link)').forEach(link => {
+                    const originalHref = link.getAttribute('href');
+                    link.setAttribute('href', `${originalHref}?userId=${userId}&displayName=${displayName}`);
+                });
 
                 // เอา Loading Overlay ออกเมื่อโหลดเสร็จ
                 document.getElementById('loadingOverlay').style.display = 'none';
@@ -271,10 +271,14 @@
             } catch (err) {
                 console.error("LIFF Init Error in Main Page:", err);
 
-                // กรณีเกิด Error ก็เปิดให้กดยื่นแบบ Guest ได้อยู่ดี
-                document.getElementById('loadingOverlay').style.display = 'none';
-                document.getElementById('menuListItems').style.pointerEvents = 'auto';
-                document.getElementById('menuListItems').style.opacity = '1';
+                // แสดงข้อความให้ผู้ใช้เปิดผ่าน LINE แทน (ไม่อนุญาตเข้าแบบ Guest)
+                document.getElementById('loadingOverlay').innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 40px; margin-bottom: 12px;">⚠️</div>
+                        <div style="font-weight: 600; color: #dc2626; margin-bottom: 8px;">ไม่สามารถเชื่อมต่อ LINE ได้</div>
+                        <div style="font-size: 13px; color: #64748b;">กรุณาเปิดลิงก์นี้ผ่านแอป LINE<br>หรือลองใหม่อีกครั้ง</div>
+                    </div>
+                `;
             }
         }
         initMainLiff();
